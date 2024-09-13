@@ -25,6 +25,8 @@ import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import it.dogior.ncc.NomiCoseCittaTheme
 import it.dogior.ncc.R
 import it.dogior.ncc.fadingEdge
@@ -33,7 +35,7 @@ import it.dogior.ncc.presentation.components.UserCard
 import it.dogior.ncc.presentation.components.PlayButton
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
     ConstraintLayout(
         modifier = modifier
             .fillMaxWidth()
@@ -88,7 +90,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 .fadingEdge(Brush.verticalGradient(0f to Color.Transparent, 0.03f to Color.Red))
                 .constrainAs(games) {
                     top.linkTo(playButtons.bottom, margin = 16.dp)
-                    bottom.linkTo(parent.bottom, margin = 4.dp)
+                    bottom.linkTo(parent.bottom)
                     height = Dimension.preferredWrapContent
                 }
                 .padding(top = 8.dp),
@@ -115,6 +117,8 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 UserCard("Giacomino01", "Hai vinto 3 round", ActionCardContent.SCOREBOARD_POSITION)
                 Spacer(modifier = Modifier.height(8.dp))
             }
+
+            item { Spacer(modifier = Modifier.height(8.dp)) }
         }
 
 
@@ -135,7 +139,8 @@ fun SectionTitle(text: String, modifier: Modifier = Modifier) {
 @PreviewLightDark
 @Composable
 fun HomeScreenPreview() {
+    val navController = rememberNavController()
     NomiCoseCittaTheme {
-        HomeScreen()
+        HomeScreen(navController)
     }
 }

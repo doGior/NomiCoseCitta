@@ -34,13 +34,15 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import it.dogior.ncc.NomiCoseCittaTheme
 import it.dogior.ncc.R
 import it.dogior.ncc.presentation.components.CategoryNote
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ListScreen(modifier: Modifier = Modifier) {
+fun ListScreen(navController: NavController, modifier: Modifier = Modifier) {
     ConstraintLayout(
         modifier = modifier
             .fillMaxSize()
@@ -96,7 +98,8 @@ fun ListScreen(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun ListScreenPreview() {
+    val navController = rememberNavController()
     NomiCoseCittaTheme {
-        ListScreen()
+        ListScreen(navController)
     }
 }

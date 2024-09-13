@@ -30,9 +30,8 @@ fun App() {
                 items = bottomNavBarItems
             )
         }) { innerPadding ->
-            NomiCoseCittaTheme{
-                NccNavHost(navController = navcontroller, innerPadding = innerPadding)
-            }
+            NccNavHost(navController = navcontroller, innerPadding = innerPadding)
+
         }
     }
 }

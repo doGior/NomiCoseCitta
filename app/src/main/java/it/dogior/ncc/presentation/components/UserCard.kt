@@ -24,8 +24,10 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import it.dogior.ncc.NomiCoseCittaTheme
 
 @Stable
@@ -42,7 +44,6 @@ fun UserCard(
         modifier = modifier,
         elevation = CardDefaults.cardElevation(2.dp)
     ) {
-        Surface {
             Row {
                 ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
                     val (proPic, text, endSurface) = createRefs()
@@ -65,17 +66,18 @@ fun UserCard(
                         Text(text = matchActivity)
                     }
 
-                    Card(shape = RoundedCornerShape(20),
-                        modifier = Modifier.constrainAs(endSurface) {
+
+                    ActionCardContentRenderer(actionCardContent,
+                        modifier = Modifier.constrainAs(endSurface){
                             top.linkTo(parent.top)
                             bottom.linkTo(parent.bottom)
-                            end.linkTo(parent.end, margin = 8.dp)
-                        }) {
-                        ActionCardContentRenderer(actionCardContent)
-                    }
+                            end.linkTo(parent.end)
+                            height = Dimension.fillToConstraints
+                            width = Dimension.ratio("4:5")
+                        })
+
                 }
             }
-        }
     }
 }
 
@@ -83,12 +85,33 @@ enum class ActionCardContent{
     PLAY_ICON, SWORDS_ICON, SCOREBOARD_POSITION
 }
 
-@Preview
+
+@PreviewLightDark
 @Composable
 fun MatchCardPreview() {
     NomiCoseCittaTheme {
         UserCard("Orlandino16",
             "La partita finisce in 7 giorni",
             ActionCardContent.SWORDS_ICON)
+    }
+}
+
+@PreviewLightDark
+@Composable
+fun MatchCardPreview1() {
+    NomiCoseCittaTheme {
+        UserCard("Orlandino16",
+            "La partita finisce in 7 giorni",
+            ActionCardContent.PLAY_ICON)
+    }
+}
+
+@PreviewLightDark
+@Composable
+fun MatchCardPreview2() {
+    NomiCoseCittaTheme {
+        UserCard("Orlandino16",
+            "La partita finisce in 7 giorni",
+            ActionCardContent.SCOREBOARD_POSITION)
     }
 }
