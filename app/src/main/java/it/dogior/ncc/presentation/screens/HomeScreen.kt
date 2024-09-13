@@ -22,6 +22,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -31,21 +33,25 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import it.dogior.ncc.NomiCoseCittaTheme
 import it.dogior.ncc.R
+import it.dogior.ncc.fadingEdge
 import it.dogior.ncc.presentation.components.MatchCard
 import it.dogior.ncc.presentation.components.MatchCardPreview
 import it.dogior.ncc.presentation.components.PlayButton
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
-    ConstraintLayout(modifier = modifier
-        .fillMaxSize()
-        .padding(bottom = 24.dp)) {
+    ConstraintLayout(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(start = 8.dp, end = 8.dp)
+    ) {
         val (logo, playButtons, games) = createRefs()
         val logoId = if (isSystemInDarkTheme()) {
             R.drawable.ncc_logo_bianco
         } else {
             R.drawable.ncc_logo_nero
         }
+
         Image(painter = painterResource(id = logoId),
             "",
             modifier = Modifier
@@ -54,15 +60,17 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
-                .scale(1.2f))
+                .scale(1.5f))
 
-        Row(modifier = Modifier
-            .constrainAs(playButtons) {
-                top.linkTo(logo.bottom, margin = 48.dp)
-                start.linkTo(parent.start, margin = 48.dp)
-                end.linkTo(parent.end, margin = 48.dp)
-            },
-            verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            modifier = Modifier
+                .constrainAs(playButtons) {
+                    top.linkTo(logo.bottom, margin = 38.dp)
+                    start.linkTo(parent.start, margin = 48.dp)
+                    end.linkTo(parent.end, margin = 48.dp)
+                },
+            verticalAlignment = Alignment.CenterVertically
+        ) {
 
 
             PlayButton(
@@ -71,7 +79,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 //                icon = Icons.Rounded.PlayArrow,
                 shape = RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp)
             )
-            Spacer(modifier = Modifier.width(1.dp))
+            Spacer(modifier = Modifier.width(2.dp))
             PlayButton(
                 "Unisciti a una partita",
                 onClick = { /*TODO*/ },
@@ -83,17 +91,19 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
         LazyColumn(
             Modifier
-                .fillMaxWidth()
+                .fadingEdge(Brush.verticalGradient(0f to Color.Transparent, 0.03f to Color.Red))
                 .constrainAs(games) {
-                    top.linkTo(playButtons.bottom, margin = 24.dp)
-                },
+                    top.linkTo(playButtons.bottom, margin = 16.dp)
+                    bottom.linkTo(parent.bottom, margin = 4.dp)
+                    height = Dimension.preferredWrapContent
+                }.padding(top = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
                 SectionTitle(text = "In Corso")
                 Spacer(modifier = Modifier.height(8.dp))
             }
-            items(7) {
+            items(3) {
                 MatchCard("Orlandino16", "La partita finisce in 7 giorni")
                 Spacer(modifier = Modifier.height(8.dp))
             }
@@ -102,8 +112,8 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 SectionTitle("Cronologia")
                 Spacer(modifier = Modifier.height(8.dp))
             }
-            items(15) {
-                MatchCard("Giacomino01", "Hai vinto 3 - 0")
+            items(7) {
+                MatchCard("Giacomino01", "Hai vinto 3 round", isMatchEnded = true)
                 Spacer(modifier = Modifier.height(8.dp))
             }
         }

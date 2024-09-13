@@ -18,26 +18,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val bottomNavBarItems = listOf(
-            Screen.HomeScreen,
-            Screen.ListsScreen,
-            Screen.ProfileScreen,
-        )
-
         setContent {
-            NomiCoseCittaTheme {
-                var navcontroller = rememberNavController()
-                Scaffold(modifier = Modifier.fillMaxSize(), bottomBar = {
-                    BottomNavBar(
-                        navController = navcontroller,
-                        items = bottomNavBarItems
-                    )
-                }) { innerPadding ->
-                    NomiCoseCittaTheme{
-                        NccNavHost(navController = navcontroller, innerPadding = innerPadding)
-                    }
-                }
-            }
+            App()
         }
     }
 }
