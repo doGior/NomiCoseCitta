@@ -1,12 +1,10 @@
 package it.dogior.ncc.presentation.components
 
 
-import android.graphics.drawable.shapes.Shape
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountCircle
@@ -19,8 +17,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,13 +28,14 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import it.dogior.ncc.NomiCoseCittaTheme
 
+@Stable
 @Composable
-fun MatchCard(
+fun UserCard(
     opponent: String,
     matchActivity: String,
+    actionCardContent: ActionCardContent,
     modifier: Modifier = Modifier,
     propic: ImageVector = Icons.Rounded.AccountCircle,
-    isMatchEnded: Boolean = false
 ) {
     ElevatedCard(
         onClick = { /*TODO*/ },
@@ -46,15 +47,17 @@ fun MatchCard(
                 ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
                     val (proPic, text, endSurface) = createRefs()
                     Icon(propic, "",
-                        Modifier.constrainAs(proPic) {
-                            start.linkTo(parent.start, margin = 16.dp)
-                            top.linkTo(parent.top)
-                            bottom.linkTo(parent.bottom)
+                        Modifier
+                            .scale(1.7f)
+                            .constrainAs(proPic) {
+                                start.linkTo(parent.start, margin = 16.dp)
+                                top.linkTo(parent.top)
+                                bottom.linkTo(parent.bottom)
 
-                        }
+                            }
                     )
                     Column(Modifier.constrainAs(text) {
-                        start.linkTo(proPic.end, margin = 16.dp)
+                        start.linkTo(proPic.end, margin = 20.dp)
                         top.linkTo(parent.top, margin = 8.dp)
                         bottom.linkTo(parent.bottom, margin = 8.dp)
                     }) {
@@ -66,39 +69,26 @@ fun MatchCard(
                         modifier = Modifier.constrainAs(endSurface) {
                             top.linkTo(parent.top)
                             bottom.linkTo(parent.bottom)
-                            end.linkTo(parent.end, margin = 16.dp)
+                            end.linkTo(parent.end, margin = 8.dp)
                         }) {
-                        if (isMatchEnded) {
-                            Column(
-                                modifier = Modifier.padding(8.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Text(
-                                    text = "7°",
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    fontWeight = FontWeight.Bold
-                                )
-                                Text(text = "su 10 ", style = MaterialTheme.typography.bodySmall)
-                            }
-
-                        } else {
-                            Icon(Icons.Rounded.PlayArrow, "", modifier = Modifier.padding(13.dp))
-                        }
+                        ActionCardContentRenderer(actionCardContent)
                     }
-
                 }
-
-
             }
         }
     }
 }
 
+enum class ActionCardContent{
+    PLAY_ICON, SWORDS_ICON, SCOREBOARD_POSITION
+}
 
 @Preview
 @Composable
 fun MatchCardPreview() {
     NomiCoseCittaTheme {
-        MatchCard("Orlandino16", "La partita finisce in 7 giorni", isMatchEnded = true)
+        UserCard("Orlandino16",
+            "La partita finisce in 7 giorni",
+            ActionCardContent.SWORDS_ICON)
     }
 }

@@ -2,20 +2,14 @@ package it.dogior.ncc.presentation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.PlayArrow
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,8 +28,8 @@ import androidx.constraintlayout.compose.Dimension
 import it.dogior.ncc.NomiCoseCittaTheme
 import it.dogior.ncc.R
 import it.dogior.ncc.fadingEdge
-import it.dogior.ncc.presentation.components.MatchCard
-import it.dogior.ncc.presentation.components.MatchCardPreview
+import it.dogior.ncc.presentation.components.ActionCardContent
+import it.dogior.ncc.presentation.components.UserCard
 import it.dogior.ncc.presentation.components.PlayButton
 
 @Composable
@@ -96,7 +90,8 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     top.linkTo(playButtons.bottom, margin = 16.dp)
                     bottom.linkTo(parent.bottom, margin = 4.dp)
                     height = Dimension.preferredWrapContent
-                }.padding(top = 8.dp),
+                }
+                .padding(top = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
@@ -104,7 +99,11 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 Spacer(modifier = Modifier.height(8.dp))
             }
             items(3) {
-                MatchCard("Orlandino16", "La partita finisce in 7 giorni")
+                UserCard(
+                    "Orlandino16",
+                    "La partita finisce in 7 giorni",
+                    ActionCardContent.PLAY_ICON
+                )
                 Spacer(modifier = Modifier.height(8.dp))
             }
             item { Spacer(modifier = Modifier.height(24.dp)) }
@@ -113,7 +112,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 Spacer(modifier = Modifier.height(8.dp))
             }
             items(7) {
-                MatchCard("Giacomino01", "Hai vinto 3 round", isMatchEnded = true)
+                UserCard("Giacomino01", "Hai vinto 3 round", ActionCardContent.SCOREBOARD_POSITION)
                 Spacer(modifier = Modifier.height(8.dp))
             }
         }
@@ -131,10 +130,9 @@ fun SectionTitle(text: String, modifier: Modifier = Modifier) {
     )
 }
 
-
+@Preview(showBackground = true)
 @PreviewScreenSizes
 @PreviewLightDark
-@Preview()
 @Composable
 fun HomeScreenPreview() {
     NomiCoseCittaTheme {
