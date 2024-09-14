@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -50,10 +51,21 @@ android {
 }
 
 dependencies {
+    // Import the Firebase BoM
+    implementation(platform(libs.firebase.bom))
+
+    // TODO: Add the dependencies for Firebase products you want to use
+
+    implementation(libs.firebase.analytics)
+
+    // Add the dependencies for any other desired Firebase products
+    // https://firebase.google.com/docs/android/setup#available-libraries
+
     implementation (libs.androidx.material.icons.extended)
     implementation (libs.androidx.constraintlayout.compose)
     implementation(libs.androidx.material.icons.core)
     implementation(libs.androidx.navigation.compose)
+    implementation (libs.jetbrains.kotlinx.serialization.json)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

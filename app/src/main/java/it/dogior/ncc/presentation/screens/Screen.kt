@@ -1,74 +1,69 @@
 package it.dogior.ncc.presentation.screens
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.List
-import androidx.compose.material.icons.automirrored.outlined.List
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.outlined.AccountCircle
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.ui.graphics.vector.ImageVector
+import kotlinx.serialization.Serializable
 
-
+@Serializable
 sealed class Screen(
-    val route: String,
-    var selected_icon: ImageVector?,
-    var unselected_icon: ImageVector?,
+    var selectedIcon: SerializableIcon?,
+    var unselectedIcon: SerializableIcon?,
     var title: String
 ) {
-    object HomeScreen :
+    @Serializable
+    data object HomeScreen :
         Screen(
-            "homeScreen",
-            Icons.Filled.Home,
-            Icons.Outlined.Home,
+            SerializableIcon("Home", isFilled = true),
+            SerializableIcon("Home", isFilled = false),
             "Home"
         )
 
-    object ListsScreen :
+    @Serializable
+    data object ListsScreen :
         Screen(
-            "listScreen",
-            Icons.AutoMirrored.Filled.List,
-            Icons.AutoMirrored.Outlined.List,
+            SerializableIcon("List", isFilled = true),
+            SerializableIcon("List", isFilled = false),
             "Liste"
         )
 
-    object ProfileScreen :
+    @Serializable
+    data object ProfileScreen :
         Screen(
-            "profileScreen",
-            Icons.Filled.AccountCircle,
-            Icons.Outlined.AccountCircle,
+            SerializableIcon("Profile", isFilled = true),
+            SerializableIcon("Profile", isFilled = false),
             "Profilo"
         )
 
-    object SettingsScreen :
+    @Serializable
+    data object SettingsScreen :
         Screen(
-            "settingsScreen",
             null,
             null,
             "Impostazioni"
         )
 
-    object NewGameScreen :
+    @Serializable
+    data object NewGameScreen :
         Screen(
-            "newGameScreen",
             null,
             null,
             "Crea Partita"
         )
 
-    object JoinGameScreen :
+    @Serializable
+    data object JoinGameScreen :
         Screen(
-            "joinGameScreen",
             null,
             null,
             "Unisciti a una partita"
         )
 
-    object WelcomeScreen :
+    @Serializable
+    data object WelcomeScreen :
         Screen(
-            "welcomeScreen",
             null,
             null,
             "Benvenuto"
         )
 }
+
+@Serializable
+data class SerializableIcon(val iconName: String, val isFilled: Boolean)

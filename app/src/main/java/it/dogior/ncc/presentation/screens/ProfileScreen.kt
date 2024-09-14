@@ -69,7 +69,7 @@ fun ProfileScreen(navController: NavController, modifier: Modifier = Modifier) {
                             bottom.linkTo(parent.bottom, margin = 16.dp)
                         })
                     TextButton(
-                        onClick = { navController.navigate(Screen.SettingsScreen.route) },
+                        onClick = { navController.navigate(Screen.SettingsScreen) },
                         modifier = Modifier.constrainAs(settingsIcon) {
                             top.linkTo(parent.top, margin = 16.dp)
                             bottom.linkTo(parent.bottom, margin = 16.dp)

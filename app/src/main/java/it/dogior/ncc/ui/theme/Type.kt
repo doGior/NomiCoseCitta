@@ -40,7 +40,10 @@ val displayFontFamily = Nunito
 val baseline = Typography()
 
 val AppTypography = Typography(
-    displayLarge = baseline.displayLarge.copy(fontFamily = displayFontFamily),
+    displayLarge = baseline.displayLarge.copy(
+        fontFamily = displayFontFamily,
+        fontWeight = FontWeight.Black
+        ),
     displayMedium = baseline.displayMedium.copy(fontFamily = displayFontFamily),
     displaySmall = baseline.displaySmall.copy(fontFamily = displayFontFamily),
     headlineLarge = baseline.headlineLarge.copy(fontFamily = displayFontFamily),
