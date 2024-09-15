@@ -34,7 +34,7 @@ import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import it.dogior.ncc.NomiCoseCittaTheme
+import it.dogior.ncc.ui.theme.NomiCoseCittaTheme
 import it.dogior.ncc.presentation.screens.Screen
 import it.dogior.ncc.presentation.screens.SerializableIcon
 import kotlinx.coroutines.MainScope

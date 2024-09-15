@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import it.dogior.ncc.LocalSnackbarHostState
-import it.dogior.ncc.NomiCoseCittaTheme
+import it.dogior.ncc.ui.theme.NomiCoseCittaTheme
 import it.dogior.ncc.R
 import it.dogior.ncc.presentation.components.ActionCardContent
 import it.dogior.ncc.presentation.components.UserCard

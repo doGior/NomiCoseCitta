@@ -24,8 +24,8 @@ class TopAppBarData(
     var visibility: Boolean by mutableStateOf(visibility)
 }
 
-class TopAppBarState{var state: TopAppBarData by mutableStateOf(TopAppBarData())}
-var LocalTopAppBarData = compositionLocalOf { TopAppBarState() }
+class TopAppBarContentState{var state: TopAppBarData by mutableStateOf(TopAppBarData())}
+var LocalTopAppBarData = compositionLocalOf { TopAppBarContentState() }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

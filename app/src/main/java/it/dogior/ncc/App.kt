@@ -10,20 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.CompositingStrategy
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.compose.rememberNavController
 import it.dogior.ncc.presentation.navigation.BottomNavBar
 import it.dogior.ncc.presentation.navigation.LocalTopAppBarData
 import it.dogior.ncc.presentation.navigation.NccNavHost
 import it.dogior.ncc.presentation.navigation.TopAppBar
-import it.dogior.ncc.presentation.navigation.TopAppBarData
-import it.dogior.ncc.presentation.navigation.TopAppBarState
+import it.dogior.ncc.presentation.navigation.TopAppBarContentState
 import it.dogior.ncc.presentation.screens.Screen
+import it.dogior.ncc.ui.theme.NomiCoseCittaTheme
 
 val bottomNavBarItems = listOf(
     Screen.HomeScreen,
@@ -41,7 +36,7 @@ fun App() {
         val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
         CompositionLocalProvider(
-            LocalTopAppBarData provides TopAppBarState(),
+            LocalTopAppBarData provides TopAppBarContentState(),
             LocalSnackbarHostState provides SnackbarHostState()
         ) {
             Scaffold(
@@ -63,10 +58,3 @@ fun App() {
         }
     }
 }
-
-fun Modifier.fadingEdge(brush: Brush) = this
-    .graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
-    .drawWithContent {
-        drawContent()
-        drawRect(brush = brush, blendMode = BlendMode.DstIn)
-    }

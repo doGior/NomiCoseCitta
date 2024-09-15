@@ -63,6 +63,10 @@ dependencies {
     implementation (libs.com.firebaseui.firebase.ui.auth)
     implementation(libs.firebase.firestore)
 
+    implementation(libs.androidx.credentials)
+    // optional - needed for credentials support from play services, for devices running
+    // Android 13 and below.
+    implementation(libs.androidx.credentials.play.services.auth)
 
     implementation (libs.androidx.material.icons.extended)
     implementation (libs.androidx.constraintlayout.compose)

@@ -1,4 +1,4 @@
-package it.dogior.ncc
+package it.dogior.ncc.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val primaryLight = Color(0xFF7B5800)
