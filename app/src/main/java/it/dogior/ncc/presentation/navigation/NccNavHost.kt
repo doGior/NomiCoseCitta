@@ -13,7 +13,6 @@ import it.dogior.ncc.presentation.screens.ProfileScreen
 import it.dogior.ncc.presentation.screens.Screen
 import it.dogior.ncc.presentation.screens.SettingsScreen
 import it.dogior.ncc.presentation.screens.WelcomeScreen
-import it.dogior.ncc.presentation.screens.WelcomeScreenPreview
 
 
 @Composable

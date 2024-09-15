@@ -8,7 +8,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
+import androidx.compose.material.icons.filled.ArrowForwardIos
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -16,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,11 +30,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import it.dogior.ncc.LocalSnackbarHostState
 import it.dogior.ncc.NomiCoseCittaTheme
+import it.dogior.ncc.presentation.components.BackIconButton
+import it.dogior.ncc.presentation.navigation.LocalTopAppBarData
+import it.dogior.ncc.presentation.navigation.TopAppBarData
+import kotlinx.coroutines.launch
 
 @Composable
 fun SettingsScreen(navController: NavController, modifier: Modifier = Modifier) {
-    var audioSwitch by remember {
+    var effettiSwitch by remember {
         mutableStateOf(true)
     }
     var statusSwitch by remember {
@@ -36,61 +48,140 @@ fun SettingsScreen(navController: NavController, modifier: Modifier = Modifier) 
     var lobbySwitch by remember {
         mutableStateOf(true)
     }
+    var musicSwitch by remember {
+        mutableStateOf(true)
+    }
+
+    var accountOptionsVisibility by remember {
+        mutableStateOf(false)
+    }
+    var appOptionsVisibility by remember {
+        mutableStateOf(false)
+    }
+    var creditsVisibility by remember {
+        mutableStateOf(false)
+    }
+
+
+    LocalTopAppBarData.current.state = TopAppBarData(title = {
+        Text(
+            text = "Impostazioni",
+            style = MaterialTheme.typography.titleLarge
+        )
+    }, navigationIcon = {
+        BackIconButton(navController = navController)
+    })
 
     val rowHeigth = 48.dp
+    val indentedPadding = 24.dp
 
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp),
+            .padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable {/* TODO */ }
-                .height(rowHeigth),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+                .height(rowHeigth)
+                .clickable { /*TODO*/ },
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Audio", style = MaterialTheme.typography.titleSmall)
-            Switch(checked = audioSwitch, onCheckedChange = {audioSwitch = !audioSwitch})
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable {/* TODO */ }
-                .height(rowHeigth),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(text = "Online status", style = MaterialTheme.typography.titleSmall)
-            Switch(checked = statusSwitch, onCheckedChange = {statusSwitch = !statusSwitch})
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable {/* TODO */ }
-                .height(rowHeigth),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(text = "Ricorda impostazioni lobby", style = MaterialTheme.typography.titleSmall)
-            Switch(checked = lobbySwitch, onCheckedChange = {lobbySwitch = !lobbySwitch})
+            Text(
+                text = "Account",
+                style = MaterialTheme.typography.titleSmall,
+            )
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos, contentDescription = "")
+            }
         }
 
-        Box(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(rowHeigth)
-                .clickable { /*TODO*/ },
-            contentAlignment = Alignment.CenterStart
+                .clickable { appOptionsVisibility = !appOptionsVisibility },
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "App",
+                style = MaterialTheme.typography.titleSmall,
+            )
+            IconButton(onClick = { appOptionsVisibility = !appOptionsVisibility}) {
+                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos, contentDescription = "")
+            }
+        }
+
+        if (appOptionsVisibility){
+            Column(modifier = Modifier.fillMaxWidth().padding(start = indentedPadding),
+                verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {/* TODO */ }
+                        .height(rowHeigth),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "Musica", style = MaterialTheme.typography.titleSmall)
+                    Switch(checked = musicSwitch, onCheckedChange = { musicSwitch = !musicSwitch })
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {/* TODO */ }
+                        .height(rowHeigth),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "Effetti audio", style = MaterialTheme.typography.titleSmall)
+                    Switch(checked = effettiSwitch, onCheckedChange = { effettiSwitch = !effettiSwitch })
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {/* TODO */ }
+                        .height(rowHeigth),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "Online status", style = MaterialTheme.typography.titleSmall)
+                    Switch(checked = statusSwitch, onCheckedChange = {/*TODO*/})
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {/* TODO */ }
+                        .height(rowHeigth),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "Ricorda impostazioni lobby", style = MaterialTheme.typography.titleSmall)
+                    Switch(checked = lobbySwitch, onCheckedChange = { lobbySwitch = !lobbySwitch })
+                }
+            }
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(rowHeigth)
+                .clickable { /* TODO */ },
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
                 text = "Crediti",
                 style = MaterialTheme.typography.titleSmall,
             )
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos, contentDescription = "")
+            }
         }
 
         Button(

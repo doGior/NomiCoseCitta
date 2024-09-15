@@ -19,9 +19,12 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import it.dogior.ncc.NomiCoseCittaTheme
 import it.dogior.ncc.R
+import it.dogior.ncc.presentation.navigation.LocalTopAppBarData
+import it.dogior.ncc.presentation.navigation.TopAppBarData
 
 @Composable
 fun WelcomeScreen(modifier: Modifier = Modifier) {
+    LocalTopAppBarData.current.state = TopAppBarData(visibility = false)
     ConstraintLayout(modifier.fillMaxSize()) {
         val (title, illustration, buttons) = createRefs()
         Box(modifier = Modifier.constrainAs(title){

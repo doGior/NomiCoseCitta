@@ -39,30 +39,24 @@ import androidx.navigation.compose.rememberNavController
 import it.dogior.ncc.NomiCoseCittaTheme
 import it.dogior.ncc.R
 import it.dogior.ncc.presentation.components.CategoryNote
+import it.dogior.ncc.presentation.navigation.LocalTopAppBarData
+import it.dogior.ncc.presentation.navigation.TopAppBarData
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ListScreen(navController: NavController, modifier: Modifier = Modifier) {
+    LocalTopAppBarData.current.state = TopAppBarData(title = { Text(text = "Categorie")})
     ConstraintLayout(
         modifier = modifier
             .fillMaxSize()
             .padding(start = 8.dp, end = 8.dp)
     ) {
-        val (title, text, fab) = createRefs()
-
-
-        Text("Categorie",
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.constrainAs(title) {
-                top.linkTo(parent.top, margin = 16.dp)
-                start.linkTo(parent.start, margin = 16.dp)
-                end.linkTo(parent.end, margin = 16.dp)
-            })
+        val (text, fab) = createRefs()
 
         LazyColumn(
             modifier = Modifier
                 .constrainAs(text) {
-                    top.linkTo(title.bottom, margin = 32.dp)
+                    top.linkTo(parent.top, margin = 32.dp)
                     width = Dimension.matchParent
                 }
         ) {

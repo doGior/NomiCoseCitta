@@ -60,6 +60,9 @@ dependencies {
 
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
+    implementation (libs.com.firebaseui.firebase.ui.auth)
+    implementation(libs.firebase.firestore)
+
 
     implementation (libs.androidx.material.icons.extended)
     implementation (libs.androidx.constraintlayout.compose)
@@ -75,6 +78,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.ui.text.google.fonts)
+    implementation(libs.androidx.appcompat)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
