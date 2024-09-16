@@ -25,14 +25,15 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import it.dogior.ncc.LocalSnackbarHostState
-import it.dogior.ncc.ui.theme.NomiCoseCittaTheme
 import it.dogior.ncc.R
 import it.dogior.ncc.presentation.components.ActionCardContent
-import it.dogior.ncc.presentation.components.UserCard
 import it.dogior.ncc.presentation.components.PlayButton
+import it.dogior.ncc.presentation.components.UserCard
+import it.dogior.ncc.presentation.navigation.BottomAppBarData
+import it.dogior.ncc.presentation.navigation.LocalBottomAppBarData
 import it.dogior.ncc.presentation.navigation.LocalTopAppBarData
 import it.dogior.ncc.presentation.navigation.TopAppBarData
-
+import it.dogior.ncc.ui.theme.NomiCoseCittaTheme
 import kotlinx.coroutines.launch
 
 @Composable
@@ -48,9 +49,12 @@ fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
     LocalTopAppBarData.current.state = TopAppBarData(title = {
         Image(
             painter = painterResource(id = logoId),
-            "", modifier = Modifier.scale(1.5f).padding(bottom = 8.dp)
+            "", modifier = Modifier
+                .scale(1.5f)
+                .padding(bottom = 8.dp)
         )
     })
+    LocalBottomAppBarData.current.state = BottomAppBarData(visibility = true)
 
     val snackbarHostState = LocalSnackbarHostState.current
     LazyColumn(

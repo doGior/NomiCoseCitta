@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="it.dogior.ncc" />
+                  <option name="mobileSdkAppId" value="1:943381064813:android:bf853d6908eb42dfe8a364" />
+                  <option name="projectId" value="nomicosecitta-19e93" />
+                  <option name="projectNumber" value="943381064813" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

@@ -12,7 +12,9 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.compose.rememberNavController
+import it.dogior.ncc.presentation.navigation.BottomAppBarContentState
 import it.dogior.ncc.presentation.navigation.BottomNavBar
+import it.dogior.ncc.presentation.navigation.LocalBottomAppBarData
 import it.dogior.ncc.presentation.navigation.LocalTopAppBarData
 import it.dogior.ncc.presentation.navigation.NccNavHost
 import it.dogior.ncc.presentation.navigation.TopAppBar
@@ -26,7 +28,8 @@ val bottomNavBarItems = listOf(
     Screen.ProfileScreen,
 )
 
-var LocalSnackbarHostState = compositionLocalOf<SnackbarHostState> { error("No SnackbarHostState provided") }
+var LocalSnackbarHostState =
+    compositionLocalOf<SnackbarHostState> { error("No SnackbarHostState provided") }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,7 +40,8 @@ fun App() {
 
         CompositionLocalProvider(
             LocalTopAppBarData provides TopAppBarContentState(),
-            LocalSnackbarHostState provides SnackbarHostState()
+            LocalSnackbarHostState provides SnackbarHostState(),
+            LocalBottomAppBarData provides BottomAppBarContentState()
         ) {
             Scaffold(
                 modifier = Modifier
@@ -47,10 +51,12 @@ fun App() {
                     SnackbarHost(hostState = LocalSnackbarHostState.current)
                 },
                 bottomBar = {
-                    BottomNavBar(
-                        navController = navController,
-                        items = bottomNavBarItems
-                    )
+                    if (LocalBottomAppBarData.current.state.visibility) {
+                        BottomNavBar(
+                            navController = navController,
+                            items = bottomNavBarItems,
+                        )
+                    }
                 },
                 topBar = { TopAppBar(scrollBehavior) }) { innerPadding ->
                 NccNavHost(navController = navController, innerPadding = innerPadding)

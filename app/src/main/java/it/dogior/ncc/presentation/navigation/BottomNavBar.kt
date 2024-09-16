@@ -19,6 +19,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -34,11 +35,24 @@ import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import it.dogior.ncc.ui.theme.NomiCoseCittaTheme
 import it.dogior.ncc.presentation.screens.Screen
 import it.dogior.ncc.presentation.screens.SerializableIcon
+import it.dogior.ncc.ui.theme.NomiCoseCittaTheme
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+
+
+class BottomAppBarData(
+    visibility: Boolean = true
+) {
+    var visibility: Boolean by mutableStateOf(visibility)
+}
+
+class BottomAppBarContentState {
+    var state: BottomAppBarData by mutableStateOf(BottomAppBarData())
+}
+
+var LocalBottomAppBarData = compositionLocalOf { BottomAppBarContentState() }
 
 @Composable
 fun BottomNavBar(navController: NavHostController, items: List<Screen>) {
@@ -73,23 +87,23 @@ fun BottomNavBar(navController: NavHostController, items: List<Screen>) {
             val isScreenSelected = selectedItemIndex == index
             NavigationBarItem(
                 icon = {
-                if (isScreenSelected) {
-                    screen.selectedIcon?.let {
-                        Icon(
-                            imageVector = getIconFromSerializable(it),
-                            contentDescription = screen.title,
-                            modifier = Modifier.scale(scale.value)
-                        )
+                    if (isScreenSelected) {
+                        screen.selectedIcon?.let {
+                            Icon(
+                                imageVector = getIconFromSerializable(it),
+                                contentDescription = screen.title,
+                                modifier = Modifier.scale(scale.value)
+                            )
+                        }
+                    } else {
+                        screen.unselectedIcon?.let {
+                            Icon(
+                                imageVector = getIconFromSerializable(it),
+                                contentDescription = screen.title
+                            )
+                        }
                     }
-                } else {
-                    screen.unselectedIcon?.let {
-                        Icon(
-                            imageVector = getIconFromSerializable(it),
-                            contentDescription = screen.title
-                        )
-                    }
-                }
-            },
+                },
                 label = { Text(text = screen.title) },
                 selected = isScreenSelected,
                 alwaysShowLabel = false,
@@ -113,21 +127,23 @@ fun BottomNavBar(navController: NavHostController, items: List<Screen>) {
 }
 
 fun getIconFromSerializable(serializableIcon: SerializableIcon): ImageVector {
-    return if(serializableIcon.isFilled) {
-        when(serializableIcon.iconName){
+    return if (serializableIcon.isFilled) {
+        when (serializableIcon.iconName) {
             "Home" -> Icons.Filled.Home
             "List" -> Icons.AutoMirrored.Filled.List
             "Profile" -> Icons.Filled.AccountCircle
             else -> {
-                Icons.Filled.QuestionMark}
+                Icons.Filled.QuestionMark
+            }
         }
     } else {
-        when(serializableIcon.iconName){
+        when (serializableIcon.iconName) {
             "Home" -> Icons.Outlined.Home
             "List" -> Icons.AutoMirrored.Outlined.List
             "Profile" -> Icons.Outlined.AccountCircle
             else -> {
-                Icons.Outlined.QuestionMark}
+                Icons.Outlined.QuestionMark
+            }
         }
     }
 }
