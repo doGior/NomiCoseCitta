@@ -45,7 +45,7 @@ sealed class Screen(
         Screen(
             null,
             null,
-            "Crea Partita"
+            "Crea partita"
         )
 
     @Serializable

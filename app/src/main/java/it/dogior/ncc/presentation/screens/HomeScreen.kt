@@ -1,7 +1,6 @@
 package it.dogior.ncc.presentation.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,28 +24,33 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import it.dogior.ncc.LocalSnackbarHostState
+import it.dogior.ncc.LocalTheme
 import it.dogior.ncc.R
 import it.dogior.ncc.presentation.components.ActionCardContent
+import it.dogior.ncc.presentation.components.ChooseUsernameModal
 import it.dogior.ncc.presentation.components.PlayButton
 import it.dogior.ncc.presentation.components.UserCard
 import it.dogior.ncc.presentation.navigation.BottomAppBarData
 import it.dogior.ncc.presentation.navigation.LocalBottomAppBarData
 import it.dogior.ncc.presentation.navigation.LocalTopAppBarData
 import it.dogior.ncc.presentation.navigation.TopAppBarData
+import it.dogior.ncc.presentation.viewmodels.LoginState
 import it.dogior.ncc.ui.theme.NomiCoseCittaTheme
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
-    val logoId = if (isSystemInDarkTheme()) {
-        R.drawable.ncc_logo_bianco
-    } else {
-        R.drawable.ncc_logo_nero
-    }
-
-    val scope = rememberCoroutineScope()
+fun HomeScreen(
+    navController: NavController,
+    loginState: LoginState,
+    modifier: Modifier = Modifier
+) {
     //TopAppBar
     LocalTopAppBarData.current.state = TopAppBarData(title = {
+        val logoId = if (LocalTheme.current.darkMode) {
+            R.drawable.ncc_logo_bianco
+        } else {
+            R.drawable.ncc_logo_nero
+        }
         Image(
             painter = painterResource(id = logoId),
             "", modifier = Modifier
@@ -57,6 +61,13 @@ fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
     LocalBottomAppBarData.current.state = BottomAppBarData(visibility = true)
 
     val snackbarHostState = LocalSnackbarHostState.current
+
+    val scope = rememberCoroutineScope()
+
+    if (!loginState.isUsernameChosen) {
+        ChooseUsernameModal(state = loginState)
+    }
+
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -111,7 +122,8 @@ fun SectionTitle(text: String, modifier: Modifier = Modifier) {
     Text(
         text = text,
         style = MaterialTheme.typography.titleMedium,
-        color = MaterialTheme.colorScheme.secondary
+        color = MaterialTheme.colorScheme.secondary,
+        modifier = modifier
     )
 }
 
@@ -122,6 +134,6 @@ fun SectionTitle(text: String, modifier: Modifier = Modifier) {
 fun HomeScreenPreview() {
     val navController = rememberNavController()
     NomiCoseCittaTheme {
-        HomeScreen(navController)
+        HomeScreen(navController, LoginState())
     }
 }

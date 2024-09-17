@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,11 +18,15 @@ import it.dogior.ncc.presentation.viewmodels.LoginViewModel
 
 @Composable
 fun NccNavHost(navController: NavHostController, innerPadding: PaddingValues) {
-    //val context = LocalContext.current
     NavHost(navController = navController, startDestination = Screen.WelcomeScreen) {
+        val loginViewModel = LoginViewModel()
 
         composable<Screen.HomeScreen> {
-            HomeScreen(navController, modifier = Modifier.padding(innerPadding))
+            HomeScreen(
+                navController,
+                loginViewModel.state,
+                modifier = Modifier.padding(innerPadding)
+            )
         }
 
         composable<Screen.ListsScreen> {
@@ -39,11 +42,10 @@ fun NccNavHost(navController: NavHostController, innerPadding: PaddingValues) {
         }
 
         composable<Screen.WelcomeScreen> {
-            val viewModel = viewModel<LoginViewModel>()
             WelcomeScreen(
                 navController,
-                state = viewModel.state,
-                onAction = viewModel::handleGoogleLogIn,
+                state = loginViewModel.state,
+                onSignIn = loginViewModel::handleLogin,
                 modifier = Modifier.padding(innerPadding)
             )
         }

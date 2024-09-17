@@ -1,5 +1,7 @@
 package it.dogior.ncc.presentation.viewmodels
 
+import android.app.Activity
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,22 +12,34 @@ import it.dogior.ncc.domain.auth.AccountManager
 import kotlinx.coroutines.launch
 
 data class LoginState(
-    val username: String? = null,
+    val uid: String? = null,
+    var username: String? = null,
     val errorMessage: String? = null,
-    val isLoggedIn: Boolean = false,
+    var isUsernameChosen: Boolean = false,
 )
 
 class LoginViewModel : ViewModel() {
     var state by mutableStateOf(LoginState())
         private set
 
-    fun handleGoogleLogIn(accountManager: AccountManager) {
-        Log.d("LOGIN", "Reached Google Log In Function")
+    fun handleLogin(anonymous: Boolean, context: Context) {
+        val accountManager = AccountManager(context as Activity)
+
+        Log.d("LOGIN", "Reached Log In Function")
+
+        val signInFunction = if (anonymous) {
+            accountManager::anonymousSignIn
+        } else {
+            accountManager::googleSignIn
+        }
+
         viewModelScope.launch {
-            accountManager.googleSignIn().collect { result ->
+            signInFunction().collect { result ->
                 result.fold(
                     onSuccess = {
-                        state = state.copy(username = it.user?.displayName, isLoggedIn = true)
+                        state = state.copy(
+                            uid = it.user?.uid,
+                        )
                         Log.d("LOGIN", "Success")
                     }, onFailure = {
                         state = state.copy(errorMessage = it.message)
@@ -35,5 +49,4 @@ class LoginViewModel : ViewModel() {
             }
         }
     }
-
 }
