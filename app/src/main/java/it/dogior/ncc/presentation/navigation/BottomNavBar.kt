@@ -3,15 +3,6 @@ package it.dogior.ncc.presentation.navigation
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.List
-import androidx.compose.material.icons.automirrored.outlined.List
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.QuestionMark
-import androidx.compose.material.icons.outlined.AccountCircle
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.QuestionMark
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -29,14 +20,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import it.dogior.ncc.presentation.screens.Screen
-import it.dogior.ncc.presentation.screens.SerializableIcon
 import it.dogior.ncc.ui.theme.NomiCoseCittaTheme
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -90,7 +79,7 @@ fun BottomNavBar(navController: NavHostController, items: List<Screen>) {
                     if (isScreenSelected) {
                         screen.selectedIcon?.let {
                             Icon(
-                                imageVector = getIconFromSerializable(it),
+                                painter = painterResource(it),
                                 contentDescription = screen.title,
                                 modifier = Modifier.scale(scale.value)
                             )
@@ -98,7 +87,7 @@ fun BottomNavBar(navController: NavHostController, items: List<Screen>) {
                     } else {
                         screen.unselectedIcon?.let {
                             Icon(
-                                imageVector = getIconFromSerializable(it),
+                                painter = painterResource(id = it),
                                 contentDescription = screen.title
                             )
                         }
@@ -122,28 +111,6 @@ fun BottomNavBar(navController: NavHostController, items: List<Screen>) {
                         restoreState = true
                     }
                 })
-        }
-    }
-}
-
-fun getIconFromSerializable(serializableIcon: SerializableIcon): ImageVector {
-    return if (serializableIcon.isFilled) {
-        when (serializableIcon.iconName) {
-            "Home" -> Icons.Filled.Home
-            "List" -> Icons.AutoMirrored.Filled.List
-            "Profile" -> Icons.Filled.AccountCircle
-            else -> {
-                Icons.Filled.QuestionMark
-            }
-        }
-    } else {
-        when (serializableIcon.iconName) {
-            "Home" -> Icons.Outlined.Home
-            "List" -> Icons.AutoMirrored.Outlined.List
-            "Profile" -> Icons.Outlined.AccountCircle
-            else -> {
-                Icons.Outlined.QuestionMark
-            }
         }
     }
 }

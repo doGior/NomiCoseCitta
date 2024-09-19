@@ -18,9 +18,9 @@ import it.dogior.ncc.presentation.navigation.BottomNavBar
 import it.dogior.ncc.presentation.navigation.LocalBottomAppBarData
 import it.dogior.ncc.presentation.navigation.LocalTopAppBarData
 import it.dogior.ncc.presentation.navigation.NccNavHost
+import it.dogior.ncc.presentation.navigation.Screen
 import it.dogior.ncc.presentation.navigation.TopAppBar
 import it.dogior.ncc.presentation.navigation.TopAppBarContentState
-import it.dogior.ncc.presentation.screens.Screen
 import it.dogior.ncc.ui.theme.NomiCoseCittaTheme
 
 data class CurrentTheme(

@@ -1,6 +1,5 @@
 package it.dogior.ncc.presentation.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,29 +9,29 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import it.dogior.ncc.CurrentTheme
 import it.dogior.ncc.LocalSnackbarHostState
 import it.dogior.ncc.LocalTheme
-import it.dogior.ncc.R
 import it.dogior.ncc.presentation.components.ActionCardContent
 import it.dogior.ncc.presentation.components.ChooseUsernameModal
 import it.dogior.ncc.presentation.components.PlayButton
 import it.dogior.ncc.presentation.components.UserCard
+import it.dogior.ncc.presentation.navigation.BottomAppBarContentState
 import it.dogior.ncc.presentation.navigation.BottomAppBarData
 import it.dogior.ncc.presentation.navigation.LocalBottomAppBarData
 import it.dogior.ncc.presentation.navigation.LocalTopAppBarData
+import it.dogior.ncc.presentation.navigation.TopAppBarContentState
 import it.dogior.ncc.presentation.navigation.TopAppBarData
 import it.dogior.ncc.presentation.viewmodels.LoginState
 import it.dogior.ncc.ui.theme.NomiCoseCittaTheme
@@ -46,17 +45,7 @@ fun HomeScreen(
 ) {
     //TopAppBar
     LocalTopAppBarData.current.state = TopAppBarData(title = {
-        val logoId = if (LocalTheme.current.darkMode) {
-            R.drawable.ncc_logo_bianco
-        } else {
-            R.drawable.ncc_logo_nero
-        }
-        Image(
-            painter = painterResource(id = logoId),
-            "", modifier = Modifier
-                .scale(1.5f)
-                .padding(bottom = 8.dp)
-        )
+        Text(text = "NOMI COSE CITTÀ")
     })
     LocalBottomAppBarData.current.state = BottomAppBarData(visibility = true)
 
@@ -128,12 +117,17 @@ fun SectionTitle(text: String, modifier: Modifier = Modifier) {
 }
 
 @Preview(showBackground = true)
-@PreviewScreenSizes
-@PreviewLightDark
 @Composable
 fun HomeScreenPreview() {
     val navController = rememberNavController()
-    NomiCoseCittaTheme {
-        HomeScreen(navController, LoginState())
+    CompositionLocalProvider(
+        LocalTopAppBarData provides TopAppBarContentState(),
+        LocalSnackbarHostState provides SnackbarHostState(),
+        LocalBottomAppBarData provides BottomAppBarContentState(),
+        LocalTheme provides CurrentTheme()
+    ) {
+        NomiCoseCittaTheme {
+            HomeScreen(navController, LoginState(isUsernameChosen = true))
+        }
     }
 }

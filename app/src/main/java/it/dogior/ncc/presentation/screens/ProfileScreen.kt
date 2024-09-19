@@ -33,19 +33,22 @@ import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import it.dogior.ncc.ui.theme.NomiCoseCittaTheme
 import it.dogior.ncc.R
 import it.dogior.ncc.presentation.components.ActionCardContent
 import it.dogior.ncc.presentation.components.UserCard
 import it.dogior.ncc.presentation.navigation.LocalTopAppBarData
+import it.dogior.ncc.presentation.navigation.Screen
 import it.dogior.ncc.presentation.navigation.TopAppBarData
+import it.dogior.ncc.ui.theme.NomiCoseCittaTheme
 
 @Composable
 fun ProfileScreen(navController: NavController, modifier: Modifier = Modifier) {
-    LocalTopAppBarData.current.state = TopAppBarData(title = { Text(text = "Profilo")}, actions = { IconButton(
-        onClick = { navController.navigate(Screen.SettingsScreen)}) {
-        Icon(imageVector = Icons.Filled.Settings, contentDescription = "")
-    }})
+    LocalTopAppBarData.current.state = TopAppBarData(title = { Text(text = "Profilo") }, actions = {
+        IconButton(
+            onClick = { navController.navigate(Screen.SettingsScreen) }) {
+            Icon(imageVector = Icons.Filled.Settings, contentDescription = "")
+        }
+    })
 
 
     LazyColumn(
@@ -58,7 +61,7 @@ fun ProfileScreen(navController: NavController, modifier: Modifier = Modifier) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
-            ){
+            ) {
                 Image(
                     painter = painterResource(
                         id = R.drawable.propic_octopus

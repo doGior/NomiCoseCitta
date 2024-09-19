@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
+import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -89,7 +90,7 @@ fun SettingsScreen(navController: NavController, modifier: Modifier = Modifier) 
                 style = MaterialTheme.typography.titleSmall,
             )
             IconButton(onClick = { /*TODO*/ }) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos, contentDescription = "")
+                Icon(imageVector = Icons.Filled.ChevronRight, contentDescription = "")
             }
         }
 
@@ -106,7 +107,7 @@ fun SettingsScreen(navController: NavController, modifier: Modifier = Modifier) 
                 style = MaterialTheme.typography.titleSmall,
             )
             IconButton(onClick = { appOptionsVisibility = !appOptionsVisibility}) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos, contentDescription = "")
+                Icon(imageVector = Icons.Filled.ChevronRight, contentDescription = "")
             }
         }
 
@@ -174,7 +175,7 @@ fun SettingsScreen(navController: NavController, modifier: Modifier = Modifier) 
                 style = MaterialTheme.typography.titleSmall,
             )
             IconButton(onClick = { /*TODO*/ }) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos, contentDescription = "")
+                Icon(imageVector = Icons.Filled.ChevronRight, contentDescription = "")
             }
         }
 

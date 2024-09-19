@@ -74,6 +74,10 @@ dependencies {
 
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    implementation(libs.androidx.datastore.preferences)
+
+    implementation(libs.core)
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.androidx.constraintlayout.compose)
@@ -93,10 +97,24 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.googleid)
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+
+    // For Robolectric tests.
+    testImplementation(libs.hilt.android.testing)
+    // ...with Kotlin.
+    kaptTest(libs.hilt.android.compiler)
+    // For instrumented tests.
+    androidTestImplementation(libs.hilt.android.testing)
+    // ...with Kotlin.
+    kaptAndroidTest(libs.hilt.android.compiler)
+
+
+    testImplementation(libs.robolectric)
+
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }

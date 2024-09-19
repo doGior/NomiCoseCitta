@@ -8,7 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import it.dogior.ncc.domain.auth.AccountManager
+import it.dogior.ncc.data.auth.AccountManager
 import kotlinx.coroutines.launch
 
 data class LoginState(
@@ -25,7 +25,7 @@ class LoginViewModel : ViewModel() {
     fun handleLogin(anonymous: Boolean, context: Context) {
         val accountManager = AccountManager(context as Activity)
 
-        Log.d("LOGIN", "Reached Log In Function")
+        Log.d("LOGIN", "Reached Log In Viewmodel")
 
         val signInFunction = if (anonymous) {
             accountManager::anonymousSignIn
@@ -34,19 +34,18 @@ class LoginViewModel : ViewModel() {
         }
 
         viewModelScope.launch {
-            signInFunction().collect { result ->
-                result.fold(
-                    onSuccess = {
-                        state = state.copy(
-                            uid = it.user?.uid,
-                        )
-                        Log.d("LOGIN", "Success")
-                    }, onFailure = {
-                        state = state.copy(errorMessage = it.message)
-                        Log.d("LOGIN", "Failure: ${it.message}")
-                    }
-                )
-            }
+            signInFunction().fold(
+                onSuccess = {
+                    state = state.copy(
+                        uid = it.user?.uid,
+                    )
+                    Log.d("LOGIN", "Success")
+                }, onFailure = {
+                    state = state.copy(errorMessage = it.message)
+                    Log.d("LOGIN", "Failure: ${it.message}")
+                }
+            )
+            
         }
     }
 }
